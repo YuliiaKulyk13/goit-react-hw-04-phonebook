@@ -20,7 +20,7 @@ export function App() {
 
   const addNewContact = (name, number) => {
     const normalizedName = name.toLowerCase();
-    const checkName = contacts.filter(contact =>
+    const checkName = contacts.some(contact =>
       contact.name.toLowerCase().includes(normalizedName)
     );
 
@@ -49,7 +49,8 @@ export function App() {
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
-
+  const filterContacts = filteredContacts();
+  console.log(filterContacts);
   return (
     <Layout>
       <Title title={'Phonebook'} />
@@ -58,10 +59,12 @@ export function App() {
       <Title title={'Contacts'} />
       <Filter value={filter} onChange={changeFilter} />
 
-      <PhoneContacts
-        contacts={filteredContacts}
-        onDeleteContact={deleteContact}
-      />
+      {filterContacts.length && (
+        <PhoneContacts
+          contacts={filterContacts}
+          onDeleteContact={deleteContact}
+        />
+      )}
     </Layout>
   );
 }
